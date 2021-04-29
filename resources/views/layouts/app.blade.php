@@ -25,7 +25,7 @@
         <main class="min-h-screen bg-gray-100 flex flex-col">
             @include('layouts.navigation')
 
-            <div class="flex-grow">
+            <div class="flex-grow w-4/5 mx-auto pt-8">
                 {{ $slot }}
             </div>
         </main>

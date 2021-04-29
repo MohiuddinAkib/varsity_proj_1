@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class OrganizationPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +24,10 @@ class OrganizationPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function view(User $user, Organization $organization)
+    public function view(User $user, User $model)
     {
         //
     }
@@ -41,17 +40,17 @@ class OrganizationPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole("host_admin");
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function update(User $user, Organization $organization)
+    public function update(User $user, User $model)
     {
         //
     }
@@ -60,10 +59,10 @@ class OrganizationPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function delete(User $user, Organization $organization)
+    public function delete(User $user, User $model)
     {
         //
     }
@@ -72,10 +71,10 @@ class OrganizationPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function restore(User $user, Organization $organization)
+    public function restore(User $user, User $model)
     {
         //
     }
@@ -84,11 +83,15 @@ class OrganizationPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function forceDelete(User $user, Organization $organization)
+    public function forceDelete(User $user, User $model)
     {
         //
+    }
+
+    public function createHostAdmin(User $user) {
+        return $user->hasRole("super_admin");
     }
 }

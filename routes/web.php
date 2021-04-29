@@ -2,6 +2,9 @@
 
 use App\Http\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\HostAdminCreate;
+use App\Http\Livewire\OrganizationList;
+use App\Http\Livewire\OrganizationCreate;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,14 +17,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get("/", function () {
+    return view("welcome");
 });
 
 
-Route::get('/dashboard', Dashboard::class)->middleware(['auth'])->name('dashboard');
+Route::get("/dashboard", Dashboard::class)
+    ->middleware(["auth"])
+    ->name("dashboard");
 
-require __DIR__ . '/auth.php';
+Route::get("/host-admin-create", HostAdminCreate::class)
+    ->middleware(["auth", "role:super_admin"])
+    ->name("host_admin.create");
+
+Route::get("/organization", OrganizationList::class)
+    ->middleware(["auth", "role:host_admin|super_admin"])
+    ->name("organiztion.create");
+
+Route::get("/organization-create", OrganizationCreate::class)
+    ->middleware(["auth", "role:host_admin"])
+    ->name("organiztion.create");
+
+require __DIR__ . "/auth.php";
 
 
 

@@ -2,27 +2,25 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
+use Illuminate\Support\Collection;
 
 class Dashboard extends Component
 {
-    /**
-     * @var bool
-     */
-    public $openUserCreateModal = false;
+    use WithPagination;
 
-    public function toggleUserCreationModal()
-    {
-        $this->syncInput("openUserCreateModal", !$this->openUserCreateModal);
-        $this->emitTo("host-admin-creation-modal","toggle", $this->openUserCreateModal);
-    }
+    public string $page_title = "dashboard";
 
-    public function updatedOpenUserCreateModal($value)
+    public function mount()
     {
     }
 
     public function render()
     {
-        return view('livewire.dashboard');
+        return view("livewire.dashboard", [
+            "host_admins" => User::role("host_admin")->latest()->paginate()
+        ]);
     }
 }

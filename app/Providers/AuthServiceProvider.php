@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Organization;
+use App\Models\SocialActivity;
 use App\Policies\OrganizationPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Support\Facades\Gate;
+use App\Policies\SocialActivityPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,7 +18,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Organization::class => OrganizationPolicy::class
+        User::class => UserPolicy::class,
+        Organization::class => OrganizationPolicy::class,
+        SocialActivity::class => SocialActivityPolicy::class,
     ];
 
     /**
@@ -26,5 +31,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::define("create-host-admin", [UserPolicy::class, "createHostAdmin"]);
     }
 }

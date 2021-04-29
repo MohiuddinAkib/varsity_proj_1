@@ -3,8 +3,9 @@
 
 namespace App\Services;
 
-use App\Contract\IOrganizationService;
+use App\Facades\User;
 use App\Models\Organization;
+use App\Contract\IOrganizationService;
 
 class OrganizationService implements IOrganizationService
 {
@@ -18,9 +19,31 @@ class OrganizationService implements IOrganizationService
      * @param string $localadmin_mobile_number
      * @return Organization
      */
-    public function create(string $name, string $branch, string $contact_number, int $owner_id, string $localadmin_name, string $localadmin_email, string $localadmin_mobile_number): Organization
+    public function create(string $name, string $branch, string $contact_number, int $owner_id, string $localadmin_name = "", string $localadmin_email = "", string $localadmin_mobile_number = ""): Organization
     {
-        // TODO: Implement create() method.
+        $organization = Organization::create([
+            "name" => $name,
+            "branch" => $branch,
+            "contact_number" => $contact_number,
+            "owner_id" => $owner_id,
+        ]);
+
+        $user = User::findByNameEmailContact($localadmin_name, $localadmin_email, $localadmin_mobile_number);
+
+        if ($user) {
+            $organization->local_admin()->save($user);
+        } else {
+            $user = $organization->local_admin()->create([
+                "password" => "admin1234",
+                "name" => $localadmin_name,
+                "email" => $localadmin_email,
+                "contact_number" => $localadmin_mobile_number,
+            ]);
+
+            $user->assignRole("local_admin");
+        };
+
+        return $organization;
     }
 
     /**

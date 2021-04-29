@@ -34,4 +34,10 @@ interface IUserService
      * @return User
      */
     public function createLocalAdmin(string $name, string $email, string $contact_number, string $password): User;
+
+    /**
+     * @param string $email
+     * @return User|null
+     */
+    public function findByNameEmailContact(string $email);
 }

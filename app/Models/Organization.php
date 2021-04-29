@@ -9,13 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Organization extends Model
 {
+    protected $guarded = [];
+
     use HasFactory, SoftDeletes, CascadeSoftDeletes;
 
     protected $cascadeDeletes = ["local_admin", "employees", "seminars", "social_activities", "image"];
 
     public function owner()
     {
-        return $this->belongsTo(User::class)->role("host_admin");
+        return $this->belongsTo(User::class, "owner_id", "id");
     }
 
     public function local_admin()

@@ -63,4 +63,9 @@ class UserService implements IUserService
     {
         // TODO: Implement createLocalAdmin() method.
     }
+
+    public function findByNameEmailContact(string $email)
+    {
+        return User::whereEmail($email)->first();
+    }
 }

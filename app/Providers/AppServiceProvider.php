@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Contract\IUserService;
 use App\Contract\ISeminarService;
+use App\Contract\IOrganizationService;
 use App\Contract\ISocialActivityService;
 
 use App\Services\UserService;
 use App\Services\SeminarService;
+use App\Services\OrganizationService;
 use App\Services\SocialActivityService;
 
 use Illuminate\Support\ServiceProvider;
