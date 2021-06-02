@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\SocialActivityCreate;
+use App\Http\Livewire\SocialActivityList;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\HostAdminCreate;
+use App\Http\Livewire\LocalAdminList;
+use App\Http\Livewire\LocalAdminCreate;
 use App\Http\Livewire\OrganizationList;
 use App\Http\Livewire\OrganizationCreate;
 
@@ -32,11 +36,27 @@ Route::get("/host-admin-create", HostAdminCreate::class)
 
 Route::get("/organization", OrganizationList::class)
     ->middleware(["auth", "role:host_admin|super_admin"])
-    ->name("organiztion.create");
+    ->name("organization.create");
 
 Route::get("/organization-create", OrganizationCreate::class)
     ->middleware(["auth", "role:host_admin"])
-    ->name("organiztion.create");
+    ->name("organization.create");
+
+Route::get("/local-admin", LocalAdminList::class)
+    ->middleware(["auth", "role:host_admin"])
+    ->name("local_admin.index");
+
+Route::get("/local-admin-create", LocalAdminCreate::class)
+    ->middleware(["auth", "role:host_admin", "shoud_have_organization_before_local_admin_create"])
+    ->name("local_admin.create");
+
+Route::get("/social-activity", SocialActivityList::class)
+    ->middleware(["auth", "role:local_admin"])
+    ->name("social_activity.index");
+
+Route::get("/social-activity-create", SocialActivityCreate::class)
+    ->middleware(["auth", "role:local_admin"])
+    ->name("social_activity.create");
 
 require __DIR__ . "/auth.php";
 

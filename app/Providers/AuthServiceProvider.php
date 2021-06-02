@@ -33,5 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define("create-host-admin", [UserPolicy::class, "createHostAdmin"]);
+        Gate::define("create-local-admin", [UserPolicy::class, "createLocalAdmin"]);
+        Gate::define("delete-local-admin", [UserPolicy::class, "deleteLocalAdmin"]);
     }
 }

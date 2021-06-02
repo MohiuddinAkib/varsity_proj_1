@@ -3,8 +3,9 @@
 
 namespace App\Services;
 
-use App\Contract\ISocialActivityService;
+use App\Exceptions\SocialActivityOnSameLocationAndDateAlreadyExistsException;
 use App\Models\SocialActivity;
+use App\Contract\ISocialActivityService;
 
 class SocialActivityService implements ISocialActivityService
 {
@@ -19,8 +20,19 @@ class SocialActivityService implements ISocialActivityService
      * @param array $volunteers
      * @return SocialActivity
      */
-    public function create(string $name, string $type, string $location, \DateTime $activity_date, int $organization_id, array $volunteers): SocialActivity
+    public function create(string $name, string $type, string $location, string $activity_date, int $organization_id, array $volunteers): SocialActivity
     {
-        // TODO: Implement create() method.
+        $another_activity = SocialActivity::whereDate("activity_date", $activity_date)->whereLocation($location)->get();
+
+        throw_unless($another_activity->isEmpty(), new SocialActivityOnSameLocationAndDateAlreadyExistsException("activity on the same date already exists"));
+
+        return SocialActivity::create([
+            "name" => $name,
+            "type" => $type,
+            "location" => $location,
+            "activity_date" => $activity_date,
+            "organization_id" => $organization_id,
+            "volunteers" => $volunteers
+        ]);
     }
 }

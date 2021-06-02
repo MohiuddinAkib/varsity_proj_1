@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Form;
 use Livewire\Component;
 use App\Models\Organization;
 use Illuminate\Support\Collection;
@@ -12,7 +13,6 @@ class OrganizationCreate extends Component
 {
     use AuthorizesRequests;
 
-    public Collection $inputs;
     public string $form_method = "saveOrganization";
     public string $card_title = "create organization";
 
@@ -32,39 +32,6 @@ class OrganizationCreate extends Component
         "local_admin_email" => ["email", "required"],
         "local_admin_contact_number" => ["string", "required", "min:11", "max:14"],
     ];
-
-    public function mount()
-    {
-        $this->fill([
-            "inputs" => collect([
-                "name" => ([
-                    "label" => "Name",
-                    "type" => "text"
-                ]),
-                "branch" => ([
-                    "label" => "Branch",
-                    "type" => "text"
-                ]),
-                "contact_number" => ([
-                    "label" => "Contact Number",
-                    "type" => "text"
-                ]),
-
-                "local_admin_name" => ([
-                    "label" => "Local Admin Name",
-                    "type" => "text"
-                ]),
-                "local_admin_email" => ([
-                    "label" => "Local Admin Email",
-                    "type" => "email"
-                ]),
-                "local_admin_contact_number" => ([
-                    "label" => "Local Admin Contact Number",
-                    "type" => "text"
-                ]),
-            ])
-        ]);
-    }
 
     public function saveOrganization()
     {
@@ -89,6 +56,40 @@ class OrganizationCreate extends Component
 
     public function render()
     {
-        return view('livewire.organization-create');
+        $errors = $this->getErrorBag();
+
+        $inputs = collect([
+            "fields" => collect([
+                "name" => collect([
+                    "label" => Form::label("name", "Name", ["class" => "block font-medium text-sm text-gray-700" . ($errors->has("name") ? " font-weight-bold text-red-400" : "")]),
+                    "input" => Form::text("name", null, ["wire:model" => "name", "class" => "w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 " . ($errors->has("name") ? "border-red-400" : "")]),
+                ]),
+                "branch" => collect([
+                    "label" => Form::label("branch", "Email Address", ["class" => "block font-medium text-sm text-gray-700" . ($errors->has("branch") ? " font-weight-bold text-red-400" : "")]),
+                    "input" => Form::text("branch", null, ["wire:model" => "branch", "class" => "w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 " . ($errors->has("branch") ? "border-red-400" : "")]),
+                ]),
+                "contact_number" => collect([
+                    "label" => Form::label("contact_number", "Contact Number", ["class" => "block font-medium text-sm text-gray-700" . ($errors->has("contact_number") ? " font-weight-bold text-red-400" : "")]),
+                    "input" => Form::text("contact_number", null, ["wire:model" => "contact_number", "class" => "w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 " . ($errors->has("contact_number") ? "border-red-400" : "")]),
+                ]),
+                "local_admin_name" => collect([
+                    "label" => Form::label("local_admin_name", "Local admin name", ["class" => "block font-medium text-sm text-gray-700" . ($errors->has("local_admin_name") ? " font-weight-bold text-red-400" : "")]),
+                    "input" => Form::text("local_admin_name", null, ["wire:model" => "local_admin_name", "class" => "w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 " . ($errors->has("local_admin_name") ? "border-red-400" : "")]),
+                ]),
+                "local_admin_email" => collect([
+                    "label" => Form::label("local_admin_email", "Local admin email", ["class" => "block font-medium text-sm text-gray-700" . ($errors->has("local_admin_email") ? " font-weight-bold text-red-400" : "")]),
+                    "input" => Form::email("local_admin_email", null, ["wire:model" => "local_admin_email", "class" => "w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 " . ($errors->has("local_admin_email") ? "border-red-400" : "")]),
+                ]),
+                "local_admin_contact_number" => collect([
+                    "label" => Form::label("local_admin_contact_number", "Local admin contact number", ["class" => "block font-medium text-sm text-gray-700" . ($errors->has("local_admin_contact_number") ? " font-weight-bold text-red-400" : "")]),
+                    "input" => Form::text("local_admin_contact_number", null, ["wire:model" => "local_admin_contact_number", "class" => "w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 " . ($errors->has("local_admin_contact_number") ? "border-red-400" : "")]),
+                ]),
+            ]),
+            "form_bottom_buttons" => [
+                "submit" => Form::submit("Create"),
+            ]
+        ]);
+
+        return view('livewire.organization-create', compact("inputs"));
     }
 }

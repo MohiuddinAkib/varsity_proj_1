@@ -12,7 +12,14 @@ class SocialActivity extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes;
 
+    protected $guarded = [];
+
     protected $cascadeDeletes = ["image"];
+
+    public function setVolunteersAttribute($value)
+    {
+        $this->attributes["volunteers"] = json_encode($value);
+    }
 
     public function organization()
     {
@@ -26,4 +33,8 @@ class SocialActivity extends Model
     {
         return $this->morphOne(Image::class, "imageable");
     }
+
+    protected $casts = [
+        "volunteers" => "array"
+    ];
 }

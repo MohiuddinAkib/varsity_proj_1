@@ -33,7 +33,7 @@ interface IUserService
      * @param string $password
      * @return User
      */
-    public function createLocalAdmin(string $name, string $email, string $contact_number, string $password): User;
+    public function createLocalAdmin(string $name, string $email, string $contact_number, string $password, string|int $organization_id): User;
 
     /**
      * @param string $email

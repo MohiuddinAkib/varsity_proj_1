@@ -11,18 +11,18 @@
 
         @role("host_admin")
             <div>
-                <a href="{{ route("organiztion.create") }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Create Organization</a>
+                <a href="{{ route("organization.create") }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Create Organization</a>
             </div>
         @endrole
     </div>
 
     <div class="">
         @role("host_admin")
-            <x-organization-table />
+            <livewire:organization-list-table />
         @endrole
 
         @role("super_admin")
-            <x-host-admin-table/>
+            <livewire:host-admin-list-table />
         @endrole
     </div>
 </div>

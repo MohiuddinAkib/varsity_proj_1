@@ -1,11 +1,13 @@
 <div>
-    <div class="flex items-center justify-between mb-5">
+    <div class="flex items-center justify-between mb-10">
         <div>
             {{-- <h2 class="font-semibold uppercase text-2xl">create host admin</h2> --}}
         </div>
 
         <div>
-            <a href="{{ route("dashboard") }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Go Back</a>
+            <a href="{{ route("dashboard") }}"
+               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Go
+                Back</a>
         </div>
     </div>
 
@@ -19,34 +21,32 @@
                 @endisset
 
                 <div class="p-3 px-5">
+
                     <div class="mb-4">
                         @if(session()->has("success"))
                             <x-alert status="success" :message="session('success')"/>
                         @endif
+
+                        @if(session()->has("error"))
+                            <x-alert status="error" :message="session('error')"/>
+                        @endif
                     </div>
 
-                    <form wire:submit.prevent="{{ $form_method }}">
-                        @csrf
-
-                        @foreach($inputs as $inputkey => $inputoptions)
-                            <fieldset class="mb-4">
-                                <x-label for="name" :value="$inputoptions['label']" :error="$errors->has($inputkey)"/>
-                                <x-input
-                                    autofocus
-                                    :id="$inputkey"
-                                    :name="$inputkey"
-                                    :errors="$errors"
-                                    :wire:model="$inputkey"
-                                    class="block mt-1 w-full"
-                                    :type="$inputoptions['type']"
-                                />
-                            </fieldset>
-                        @endforeach
-
-                        <fieldset>
-                            <x-button type="submit">Create</x-button>
+                    {!! Form::open(["wire:submit.prevent" => $form_method, "method" => ""]) !!}
+                    @foreach($inputs["fields"] as $input_key => $input_options)
+                        <fieldset class="mb-4">
+                            {!! $input_options["label"] !!}
+                            {!! $input_options["input"] !!}
+                            @error($input_key)
+                                <div class="text-red-600">{{ $message }}</div>
+                            @enderror
                         </fieldset>
-                    </form>
+                    @endforeach
+
+                    <fieldset>
+                        {!! $inputs["form_bottom_buttons"]["submit"] !!}
+                    </fieldset>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

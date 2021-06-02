@@ -15,6 +15,18 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @role("host_admin")
+                        <x-nav-link :href="route('local_admin.index')" :active="request()->routeIs('local_admin.index')">
+                            {{ __('Local admin') }}
+                        </x-nav-link>
+                    @endrole
+
+                    @role("local_admin")
+                        <x-nav-link :href="route('social_activity.index')" :active="request()->routeIs('social_activity.index')">
+                            {{ __('Social activity') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

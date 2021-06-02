@@ -32,7 +32,7 @@ class Organization extends Model
 
     public function seminars()
     {
-        return $this->hasMany(Seminars::class);
+        return $this->hasMany(Seminar::class);
     }
 
     public function social_activities()

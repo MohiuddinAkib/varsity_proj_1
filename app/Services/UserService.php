@@ -59,9 +59,19 @@ class UserService implements IUserService
      * @param string $password
      * @return User
      */
-    public function createLocalAdmin(string $name, string $email, string $contact_number, string $password): User
+    public function createLocalAdmin(string $name, string $email, string $contact_number, string $password, string|int $organization_id): User
     {
-        // TODO: Implement createLocalAdmin() method.
+        $user = User::create([
+            "name" => $name,
+            "email" => $email,
+            "password" => $password,
+            "contact_number" => $contact_number,
+            "organization_id" => $organization_id,
+        ]);
+
+        $user->assignRole("local_admin");
+
+        return $user;
     }
 
     public function findByNameEmailContact(string $email)

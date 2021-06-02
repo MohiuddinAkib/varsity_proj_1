@@ -16,5 +16,5 @@ interface ISocialActivityService
      * @param array $volunteers
      * @return SocialActivity
      */
-    public function create(string $name, string $type, string $location, \DateTime $activity_date, int $organization_id, array $volunteers): SocialActivity;
+    public function create(string $name, string $type, string $location, string $activity_date, int $organization_id, array $volunteers): SocialActivity;
 }

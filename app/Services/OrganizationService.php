@@ -55,4 +55,9 @@ class OrganizationService implements IOrganizationService
     {
         // TODO: Implement addEmployees() method.
     }
+
+    public function remove(int $organization_id): bool|null
+    {
+        return Organization::delete($organization_id);
+    }
 }
