@@ -20,9 +20,20 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         @stack("styles")
     </head>
-
     <body class="font-sans antialiased">
-        <main class="min-h-screen bg-gray-100 flex flex-col">
+        <main class="min-h-screen bg-gray-100 flex flex-col bg-center bg-cover bg-fixed"
+              @role("host_admin")
+                style='background-image: url("{{ asset("images/Amzad Host Admin.png") }}")'
+              @endrole
+
+              @role("super_admin")
+                  style='background-image: url("{{ asset("images/Amzad System Admin.jpg") }}")'
+                @endrole
+
+              @role("local_admin")
+                  style='background-image: url("{{ asset("images/Amzad Local Admin.jpg") }}")'
+              @endrole
+        >
             @include('layouts.navigation')
 
             <div class="flex-grow w-4/5 mx-auto pt-8">
