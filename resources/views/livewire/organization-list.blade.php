@@ -10,6 +10,6 @@
     </div>
 
     <div>
-        <x-organization-table />
+        <livewire:organization-list-table />
     </div>
 </div>

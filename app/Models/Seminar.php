@@ -13,6 +13,8 @@ class Seminar extends Model
 
     protected $cascadeDeletes = ["image"];
 
+    protected $guarded = [];
+
     public function organization()
     {
         return $this->belongsTo(Organization::class);

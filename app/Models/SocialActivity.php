@@ -14,11 +14,20 @@ class SocialActivity extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        "volunteers" => "array"
+    ];
+
     protected $cascadeDeletes = ["image"];
 
     public function setVolunteersAttribute($value)
     {
         $this->attributes["volunteers"] = json_encode($value);
+    }
+
+    public function getVolunteersAttribute($value)
+    {
+        return implode(", ", $value);
     }
 
     public function organization()
@@ -33,8 +42,4 @@ class SocialActivity extends Model
     {
         return $this->morphOne(Image::class, "imageable");
     }
-
-    protected $casts = [
-        "volunteers" => "array"
-    ];
 }

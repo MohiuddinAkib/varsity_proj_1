@@ -22,11 +22,17 @@
                         </x-nav-link>
                     @endrole
 
-                    @role("local_admin")
+                    @hasanyrole("local_admin|host_admin")
                         <x-nav-link :href="route('social_activity.index')" :active="request()->routeIs('social_activity.index')">
                             {{ __('Social activity') }}
                         </x-nav-link>
-                    @endrole
+                    @endhasanyrole
+
+                    @hasanyrole("local_admin|host_admin")
+                    <x-nav-link :href="route('seminar.index')" :active="request()->routeIs('seminar.index')">
+                        {{ __('Seminar') }}
+                    </x-nav-link>
+                    @endhasanyrole
                 </div>
             </div>
 

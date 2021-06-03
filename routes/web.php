@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\SeminarCreate;
+use App\Http\Livewire\SeminarList;
 use App\Http\Livewire\SocialActivityCreate;
 use App\Http\Livewire\SocialActivityList;
 use Illuminate\Support\Facades\Route;
@@ -51,12 +53,20 @@ Route::get("/local-admin-create", LocalAdminCreate::class)
     ->name("local_admin.create");
 
 Route::get("/social-activity", SocialActivityList::class)
-    ->middleware(["auth", "role:local_admin"])
+    ->middleware(["auth", "role:local_admin|host_admin"])
     ->name("social_activity.index");
 
 Route::get("/social-activity-create", SocialActivityCreate::class)
     ->middleware(["auth", "role:local_admin"])
     ->name("social_activity.create");
+
+Route::get("/seminar", SeminarList::class)
+    ->middleware(["auth", "role:local_admin|host_admin"])
+    ->name("seminar.index");
+
+Route::get("/seminar-create", SeminarCreate::class)
+    ->middleware(["auth", "role:local_admin"])
+    ->name("seminar.create");
 
 require __DIR__ . "/auth.php";
 

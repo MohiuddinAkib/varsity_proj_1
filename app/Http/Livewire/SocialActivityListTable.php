@@ -13,7 +13,13 @@ class SocialActivityListTable extends LivewireDatatable
 
     public function builder()
     {
-        return SocialActivity::query()->whereOrganizationId(auth()->user()->organization_id);
+        if (auth()->user()->hasRole("local_admin")) {
+            return SocialActivity::query()->whereOrganizationId(auth()->user()->organization_id);
+        }
+
+        $organiztion_ids = auth()->user()->organizations->map->id;
+
+        return SocialActivity::query()->whereIn("organization_id", $organiztion_ids);
     }
 
     public function columns()
@@ -21,10 +27,13 @@ class SocialActivityListTable extends LivewireDatatable
         return [
             Column::name("id")->hide(),
             Column::name("name")->label("Name")->filterable()->searchable(),
-            Column::name("location")->label("Location")->filterable()->searchable(),
-            Column::name("type")->label("Type")->filterable()->searchable(),
-            Column::name("volunteers")->label("Volunteers")->filterable()->searchable(),
-            DateColumn::name("activity_date")->label("Holding date")->filterable()->searchable(),
+            Column::name("location")->label("Location")->filterable(),
+            Column::name("type")->label("Type")->filterable(),
+            Column::callback(["volunteers"], function ($volunteers) {
+                $parsed = json_decode($volunteers);
+                return implode(", ", $parsed);
+            })->label("Volunteers"),
+            DateColumn::name("activity_date")->label("Holding date")->filterable(),
             Column::delete(),
         ];
     }

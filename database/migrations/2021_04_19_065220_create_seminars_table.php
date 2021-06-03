@@ -17,7 +17,7 @@ class CreateSeminarsTable extends Migration
             $table->id();
             $table->string("name");
             $table->string("location");
-            $table->enum("type", ["education"]);
+            $table->enum("type", ["education", "employee_seminar", "food_donation", "welfare", "money_donation", "cloth_distribution"]);
             $table->timestamp("activity_date");
             $table->string("contact_number");
             $table->foreignId("organization_id")->constrained();
