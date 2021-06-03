@@ -18,7 +18,7 @@ class CreateSocialActivitiesTable extends Migration
             $table->id();
             $table->string("name");
             $table->string("location");
-            $table->enum("type", ["education"]);
+            $table->enum("type", ["education", "employee_seminar", "food_donation", "welfare", "money_donation", "cloth_distribution"]);
             $table->timestamp("activity_date");
             $table->json("volunteers")->default(new Expression("(JSON_ARRAY())"));
             $table->foreignId("organization_id")->constrained();

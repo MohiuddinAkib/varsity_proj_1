@@ -29,7 +29,7 @@ class SocialActivityCreate extends Component
     {
         return [
             "name" => ["string", "required"],
-            "type" => ["string", "required", Rule::in(["education"])],
+            "type" => ["string", "required", Rule::in(["education", "employee_seminar", "food_donation", "welfare", "money_donation", "cloth_distribution"])],
             "location" => ["string", "required"],
             "activity_date" => ["date", "required"],
             "volunteers" => ["string", "required"],
@@ -69,7 +69,10 @@ class SocialActivityCreate extends Component
                 ]),
                 "type" => collect([
                     "label" => Form::label("type", "Type", ["class" => "block font-medium text-sm text-gray-700" . ($errors->has("type") ? " font-weight-bold text-red-400" : "")]),
-                    "input" => Form::select("type", ["education" => "Education"], null, ["wire:model" => "type", "class" => "w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 " . ($errors->has("type") ? "border-red-400" : "")]),
+                    "input" => Form::select("type", [
+                        "education" => "Education Event",
+                        "employee_seminar" => "Employee Seminar", "food_donation" => "Food Donation", "welfare" => "Welfare", "money_donation" => "Money Donation", "cloth_distribution" => "Cloth Distribution"
+                    ], null, ["wire:model" => "type", "class" => "w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 " . ($errors->has("type") ? "border-red-400" : "")]),
                 ]),
                 "location" => collect([
                     "label" => Form::label("location", "Location", ["class" => "block font-medium text-sm text-gray-700" . ($errors->has("location") ? " font-weight-bold text-red-400" : "")]),
