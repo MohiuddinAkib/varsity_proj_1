@@ -39,7 +39,7 @@ class SeminarCreate extends Component
         $this->fill([
             "organization_id" => auth()->user()->organization->id
         ]);
-    }
+    }we
 
     public function saveSeminar()
     {

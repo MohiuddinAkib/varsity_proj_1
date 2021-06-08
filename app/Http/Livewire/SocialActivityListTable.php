@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\SocialActivity;
+use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -34,7 +35,19 @@ class SocialActivityListTable extends LivewireDatatable
                 return implode(", ", $parsed);
             })->label("Volunteers"),
             DateColumn::name("activity_date")->label("Holding date")->filterable(),
-            Column::delete(),
+            BooleanColumn::name("is_approved")->label("Approved"),
+            Column::callback(["id", "is_approved"], function ($id, $name, $is_sold, $is_approved) {
+                return view('social-activity-list-table-actions', compact('id', "is_approved"));
+            })
         ];
+    }
+
+    public function toggleApproval(int $id)
+    {
+        $social_activity = SocialActivity::findOrFail($id);
+
+        $social_activity->is_approved = !$social_activity->is_approved;
+
+        $social_activity->save();
     }
 }

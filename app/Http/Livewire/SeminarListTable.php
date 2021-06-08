@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Seminar;
+use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -31,7 +32,10 @@ class SeminarListTable extends LivewireDatatable
             Column::name("type")->label("Type")->filterable(),
             Column::name("location")->label("Location")->filterable(),
             DateColumn::name("activity_date")->label("Date")->filterable(),
-            Column::delete(),
+            BooleanColumn::name("is_approved")->label("Approved"),
+            Column::callback(["id", "is_approved"], function ($id, $name, $is_sold, $is_approved) {
+                return view('seminal-list-table-actions', compact('id', "is_approved"));
+            })
         ];
     }
 }
