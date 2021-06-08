@@ -33,7 +33,7 @@ class SeminarListTable extends LivewireDatatable
             Column::name("location")->label("Location")->filterable(),
             DateColumn::name("activity_date")->label("Date")->filterable(),
             BooleanColumn::name("is_approved")->label("Approved"),
-            Column::callback(["id", "is_approved"], function ($id, $name, $is_sold, $is_approved) {
+            Column::callback(["id", "is_approved"], function ($id, $is_approved) {
                 return view('seminal-list-table-actions', compact('id', "is_approved"));
             })
         ];

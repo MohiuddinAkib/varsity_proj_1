@@ -36,7 +36,7 @@ class SocialActivityListTable extends LivewireDatatable
             })->label("Volunteers"),
             DateColumn::name("activity_date")->label("Holding date")->filterable(),
             BooleanColumn::name("is_approved")->label("Approved"),
-            Column::callback(["id", "is_approved"], function ($id, $name, $is_sold, $is_approved) {
+            Column::callback(["id", "is_approved"], function ($id, $is_approved) {
                 return view('social-activity-list-table-actions', compact('id', "is_approved"));
             })
         ];
