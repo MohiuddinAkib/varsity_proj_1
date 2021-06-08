@@ -2,9 +2,9 @@
 
     <button wire:click="toggleApproval({{ $id }})" class="p-1 text-teal-600 hover:bg-teal-600 hover:text-white rounded">
         @if($is_approved)
-            approve
-        @else
             unapprove
+        @else
+            approve
         @endif
     </button>
 
