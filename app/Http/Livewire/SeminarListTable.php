@@ -38,4 +38,13 @@ class SeminarListTable extends LivewireDatatable
             })
         ];
     }
+
+    public function toggleApproval(int $id)
+    {
+        $seminar = Seminar::findOrFail($id);
+
+        $seminar->is_approved = !$seminar->is_approved;
+
+        $seminar->save();
+    }
 }
